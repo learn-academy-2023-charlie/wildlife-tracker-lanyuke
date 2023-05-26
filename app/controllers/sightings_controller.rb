@@ -6,7 +6,7 @@ class SightingsController < ApplicationController
       end
     
       def show
-        @sightings = Sighting.find(params[:id])
+        @sightings = Sighting.find( params[:id])
         render json: @sightings
       end
     

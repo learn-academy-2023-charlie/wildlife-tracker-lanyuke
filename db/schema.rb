@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_165948) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_26_180859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_165948) do
     t.string "scientific_binomial"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sighting1s", force: :cascade do |t|
+    t.integer "animal_id"
+    t.float "latitude"
+    t.float "longitude"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sighting_reports", force: :cascade do |t|
+    t.bigint "animal_id", null: false
+    t.bigint "sighting1_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["animal_id"], name: "index_sighting_reports_on_animal_id"
+    t.index ["sighting1_id"], name: "index_sighting_reports_on_sighting1_id"
   end
 
   create_table "sightings", force: :cascade do |t|
@@ -30,4 +48,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_165948) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "sighting_reports", "animals"
+  add_foreign_key "sighting_reports", "sighting1s"
 end
